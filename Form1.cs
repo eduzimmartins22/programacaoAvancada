@@ -20,9 +20,9 @@ namespace WinFormsApp1
             corpos = universe.ReadBodies();
 
             if (corpos.Count > 500)
-                MessageBox.Show("A quantidade máxima de corpos foi atingida! MAXIMO: 200");
+                MessageBox.Show("Quantidade maxima atingida   (MAXIMO: 200) ");
             else if (ExceptionMass)
-                MessageBox.Show("A massa dos corpos devem estar entre 1 e 500");
+                MessageBox.Show("A massa dos corpos devem estar entre 1 e 499");
             else
             {
                 InitializeComponent();
