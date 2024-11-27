@@ -1,187 +1,293 @@
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-// Classe concreta que implementa todos os métodos abstratos de AB_Universo
-class Universo : AB_Universo
+namespace Simulador_de_gravidade
 {
-    private double G = 6.6740184 * Math.Pow(10, -11); // Constante gravitacional
-    private int qtdCorpos; // Quantidade de corpos
-    private int qtdInteracoes; // Quantidade de iterações
-    private double tempo; // Intervalo de tempo para os cálculos
-    private List<Body> corpos = new List<Body>(); // Lista de corpos
-    private List<Body> valoresIniciaisCorpos = new List<Body>(); // Estados iniciais dos corpos
-    private Random rnd = new Random(); // Gerador de números aleatórios
-
-    // Construtor do Universo
-    public Universo(int qtdCorpos, double intervaloTempo)
+    partial class Form1
     {
-        this.qtdCorpos = qtdCorpos;
-        this.qtdInteracoes = 0;
-        this.tempo = intervaloTempo;
-    }
+        /// <summary>
+        ///  Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-    // Recupera a lista de corpos
-    public List<Body> GetCorpos() => corpos;
-
-    // Recupera a quantidade de interações
-    public int GetQtdInteracoes() => qtdInteracoes;
-
-    // Configura a quantidade de interações
-    public void SetQtdInteracoes(int qtdInteracoes) => this.qtdInteracoes = qtdInteracoes;
-
-    // Salva o estado inicial dos corpos
-    public void SalvarValoresIniciaisCorpos()
-    {
-        valoresIniciaisCorpos = corpos.Select(corpo => corpo.Clonar()).ToList();
-    }
-
-    // Lê corpos de um arquivo (exemplo: Corpos.txt)
-    public List<Body> ReadBodies()
-    {
-        List<Body> celestialBodies = new List<Body>();
-        string file = "Corpos.txt";
-
-        if (!File.Exists(file))
+        /// <summary>
+        ///  Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
         {
-            Console.WriteLine($"Arquivo {file} não existe.");
-            return celestialBodies;
-        }
-
-        string[] lines = File.ReadAllLines(file);
-        foreach (var line in lines)
-        {
-            if (string.IsNullOrWhiteSpace(line)) continue; // Ignora linhas vazias
-            try
+            if (disposing && (components != null))
             {
-                Body newCelestialBody = new Body(line); // Tenta criar um corpo
-                celestialBodies.Add(newCelestialBody);
+                components.Dispose();
             }
-            catch (FormatException ex)
-            {
-                Console.WriteLine($"Erro ao processar a linha: {line}. Detalhes: {ex.Message}");
-            }
+            base.Dispose(disposing);
         }
 
-        corpos = celestialBodies;
-        return celestialBodies;
-    }
+        #region Windows Form Designer generated code
 
-    // Gera corpos aleatórios
-    public void GerarCorposAleatorios(int minMassa, int maxMassa, int minRaio, int maxRaio)
-    {
-        corpos.Clear();
-        for (int i = 0; i < qtdCorpos; i++)
+        /// <summary>
+        ///  Required method for Designer support - do not modify
+        ///  the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
         {
-            Body corpo = new Body();
-            corpo.setName($"Corpo_{i + 1}");
-            corpo.setMass(rnd.Next(minMassa, maxMassa));
-            corpo.setRadius(rnd.Next(minRaio, maxRaio));
-            corpo.setPosX(rnd.NextDouble() * 1000);
-            corpo.setPosY(rnd.NextDouble() * 1000);
-            corpo.setVelX(rnd.NextDouble() * 10 - 5); // Velocidade inicial aleatória
-            corpo.setVelY(rnd.NextDouble() * 10 - 5);
-            corpos.Add(corpo);
+            PainelControles = new Panel();
+            LoadButton = new Button();
+            SaveButton = new Button();
+            BotaoGerar = new Button();
+            InputMinRaio = new NumericUpDown();
+            InputMaxRaio = new NumericUpDown();
+            LabelRaios = new Label();
+            InputMaxMassa = new NumericUpDown();
+            InputMinMassa = new NumericUpDown();
+            LabelMassas = new Label();
+            InputTempoIteracoes = new NumericUpDown();
+            LabelTempoIteracoes = new Label();
+            LabelNumCorpos = new Label();
+            InputNumCorpos = new NumericUpDown();
+            BotaoParar = new Button();
+            BotaoIniciar = new Button();
+            Espaco = new Panel();
+            LabelNumIteracoes = new Label();
+            PainelControles.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)InputMinRaio).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)InputMaxRaio).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)InputMaxMassa).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)InputMinMassa).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)InputTempoIteracoes).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)InputNumCorpos).BeginInit();
+            Espaco.SuspendLayout();
+            SuspendLayout();
+            // 
+            // PainelControles
+            // 
+            PainelControles.Controls.Add(LoadButton);
+            PainelControles.Controls.Add(SaveButton);
+            PainelControles.Controls.Add(BotaoGerar);
+            PainelControles.Controls.Add(InputMinRaio);
+            PainelControles.Controls.Add(InputMaxRaio);
+            PainelControles.Controls.Add(LabelRaios);
+            PainelControles.Controls.Add(InputMaxMassa);
+            PainelControles.Controls.Add(InputMinMassa);
+            PainelControles.Controls.Add(LabelMassas);
+            PainelControles.Controls.Add(InputTempoIteracoes);
+            PainelControles.Controls.Add(LabelTempoIteracoes);
+            PainelControles.Controls.Add(LabelNumCorpos);
+            PainelControles.Controls.Add(InputNumCorpos);
+            PainelControles.Controls.Add(BotaoParar);
+            PainelControles.Controls.Add(BotaoIniciar);
+            PainelControles.Dock = DockStyle.Top;
+            PainelControles.Location = new Point(0, 0);
+            PainelControles.Name = "PainelControles";
+            PainelControles.Size = new Size(949, 69);
+            PainelControles.TabIndex = 0;
+            // 
+            // LoadButton
+            // 
+            LoadButton.Location = new Point(859, 36);
+            LoadButton.Name = "LoadButton";
+            LoadButton.Size = new Size(75, 30);
+            LoadButton.TabIndex = 14;
+            LoadButton.Text = "Carregar";
+            LoadButton.UseVisualStyleBackColor = true;
+            LoadButton.Click += Carregar_Click;
+            // 
+            // SaveButton
+            // 
+            SaveButton.Location = new Point(859, 3);
+            SaveButton.Name = "SaveButton";
+            SaveButton.Size = new Size(75, 29);
+            SaveButton.TabIndex = 13;
+            SaveButton.Text = "Salvar";
+            SaveButton.UseVisualStyleBackColor = true;
+            SaveButton.Click += Salvar_Click;
+            // 
+            // BotaoGerar
+            // 
+            BotaoGerar.Location = new Point(202, 3);
+            BotaoGerar.Name = "BotaoGerar";
+            BotaoGerar.Size = new Size(75, 63);
+            BotaoGerar.TabIndex = 12;
+            BotaoGerar.Text = "Gerar";
+            BotaoGerar.UseVisualStyleBackColor = true;
+            BotaoGerar.Click += BotaoGerar_Click;
+            // 
+            // InputMinRaio
+            // 
+            InputMinRaio.Location = new Point(612, 36);
+            InputMinRaio.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
+            InputMinRaio.Minimum = new decimal(new int[] { 10, 0, 0, 65536 });
+            InputMinRaio.Name = "InputMinRaio";
+            InputMinRaio.Size = new Size(94, 23);
+            InputMinRaio.TabIndex = 11;
+            InputMinRaio.Value = new decimal(new int[] { 500, 0, 0, 65536 });
+            // 
+            // InputMaxRaio
+            // 
+            InputMaxRaio.Location = new Point(712, 36);
+            InputMaxRaio.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
+            InputMaxRaio.Minimum = new decimal(new int[] { 10, 0, 0, 65536 });
+            InputMaxRaio.Name = "InputMaxRaio";
+            InputMaxRaio.Size = new Size(89, 23);
+            InputMaxRaio.TabIndex = 10;
+            InputMaxRaio.Value = new decimal(new int[] { 3000, 0, 0, 65536 });
+            // 
+            // LabelRaios
+            // 
+            LabelRaios.AutoSize = true;
+            LabelRaios.Location = new Point(482, 40);
+            LabelRaios.Name = "LabelRaios";
+            LabelRaios.Size = new Size(114, 15);
+            LabelRaios.TabIndex = 9;
+            LabelRaios.Text = "Raio min e max (m):";
+            // 
+            // InputMaxMassa
+            // 
+            InputMaxMassa.Location = new Point(712, 9);
+            InputMaxMassa.Maximum = new decimal(new int[] { 1000000000, 0, 0, 0 });
+            InputMaxMassa.Minimum = new decimal(new int[] { 100, 0, 0, 65536 });
+            InputMaxMassa.Name = "InputMaxMassa";
+            InputMaxMassa.Size = new Size(89, 23);
+            InputMaxMassa.TabIndex = 8;
+            InputMaxMassa.Value = new decimal(new int[] { 50000, 0, 0, 0 });
+            // 
+            // InputMinMassa
+            // 
+            InputMinMassa.Location = new Point(612, 9);
+            InputMinMassa.Maximum = new decimal(new int[] { 1000000000, 0, 0, 0 });
+            InputMinMassa.Minimum = new decimal(new int[] { 100, 0, 0, 65536 });
+            InputMinMassa.Name = "InputMinMassa";
+            InputMinMassa.Size = new Size(94, 23);
+            InputMinMassa.TabIndex = 7;
+            InputMinMassa.Value = new decimal(new int[] { 100000, 0, 0, 65536 });
+            // 
+            // LabelMassas
+            // 
+            LabelMassas.AutoSize = true;
+            LabelMassas.Location = new Point(482, 9);
+            LabelMassas.Name = "LabelMassas";
+            LabelMassas.Size = new Size(127, 15);
+            LabelMassas.TabIndex = 6;
+            LabelMassas.Text = "Massa min e max (Kg):";
+            // 
+            // InputTempoIteracoes
+            // 
+            InputTempoIteracoes.Location = new Point(412, 36);
+            InputTempoIteracoes.Maximum = new decimal(new int[] { 5000, 0, 0, 0 });
+            InputTempoIteracoes.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            InputTempoIteracoes.Name = "InputTempoIteracoes";
+            InputTempoIteracoes.Size = new Size(64, 23);
+            InputTempoIteracoes.TabIndex = 5;
+            InputTempoIteracoes.Value = new decimal(new int[] { 10, 0, 0, 0 });
+            // 
+            // LabelTempoIteracoes
+            // 
+            LabelTempoIteracoes.AutoSize = true;
+            LabelTempoIteracoes.Location = new Point(283, 38);
+            LabelTempoIteracoes.Name = "LabelTempoIteracoes";
+            LabelTempoIteracoes.Size = new Size(122, 15);
+            LabelTempoIteracoes.TabIndex = 4;
+            LabelTempoIteracoes.Text = "Quantidade Iterações:";
+            // 
+            // LabelNumCorpos
+            // 
+            LabelNumCorpos.AutoSize = true;
+            LabelNumCorpos.Location = new Point(283, 9);
+            LabelNumCorpos.Name = "LabelNumCorpos";
+            LabelNumCorpos.Size = new Size(111, 15);
+            LabelNumCorpos.TabIndex = 3;
+            LabelNumCorpos.Text = "Numero de Corpos:";
+            // 
+            // InputNumCorpos
+            // 
+            InputNumCorpos.Location = new Point(412, 7);
+            InputNumCorpos.Maximum = new decimal(new int[] { 200, 0, 0, 0 });
+            InputNumCorpos.Minimum = new decimal(new int[] { 20, 0, 0, 0 });
+            InputNumCorpos.Name = "InputNumCorpos";
+            InputNumCorpos.Size = new Size(64, 23);
+            InputNumCorpos.TabIndex = 2;
+            InputNumCorpos.Value = new decimal(new int[] { 130, 0, 0, 0 });
+            // 
+            // BotaoParar
+            // 
+            BotaoParar.Enabled = false;
+            BotaoParar.Location = new Point(84, 3);
+            BotaoParar.Name = "BotaoParar";
+            BotaoParar.Size = new Size(75, 63);
+            BotaoParar.TabIndex = 1;
+            BotaoParar.Text = "Parar";
+            BotaoParar.UseVisualStyleBackColor = true;
+            BotaoParar.Click += BotaoParar_Click;
+            // 
+            // BotaoIniciar
+            // 
+            BotaoIniciar.Enabled = false;
+            BotaoIniciar.Location = new Point(3, 3);
+            BotaoIniciar.Name = "BotaoIniciar";
+            BotaoIniciar.Size = new Size(75, 63);
+            BotaoIniciar.TabIndex = 0;
+            BotaoIniciar.Text = "Iniciar";
+            BotaoIniciar.UseVisualStyleBackColor = true;
+            BotaoIniciar.Click += BotaoIniciar_Click;
+            // 
+            // Espaco
+            // 
+            Espaco.BackColor = Color.Black;
+            Espaco.Controls.Add(LabelNumIteracoes);
+            Espaco.Dock = DockStyle.Fill;
+            Espaco.Location = new Point(0, 69);
+            Espaco.Name = "Espaco";
+            Espaco.Size = new Size(949, 381);
+            Espaco.TabIndex = 1;
+            Espaco.Paint += Espaco_Paint;
+            // 
+            // LabelNumIteracoes
+            // 
+            LabelNumIteracoes.AutoSize = true;
+            LabelNumIteracoes.ForeColor = Color.Yellow;
+            LabelNumIteracoes.Location = new Point(3, 3);
+            LabelNumIteracoes.Name = "LabelNumIteracoes";
+            LabelNumIteracoes.Size = new Size(0, 15);
+            LabelNumIteracoes.TabIndex = 13;
+            // 
+            // Form1
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(949, 450);
+            Controls.Add(Espaco);
+            Controls.Add(PainelControles);
+            Name = "Form1";
+            Text = "Simulador de gravidade";
+            PainelControles.ResumeLayout(false);
+            PainelControles.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)InputMinRaio).EndInit();
+            ((System.ComponentModel.ISupportInitialize)InputMaxRaio).EndInit();
+            ((System.ComponentModel.ISupportInitialize)InputMaxMassa).EndInit();
+            ((System.ComponentModel.ISupportInitialize)InputMinMassa).EndInit();
+            ((System.ComponentModel.ISupportInitialize)InputTempoIteracoes).EndInit();
+            ((System.ComponentModel.ISupportInitialize)InputNumCorpos).EndInit();
+            Espaco.ResumeLayout(false);
+            Espaco.PerformLayout();
+            ResumeLayout(false);
         }
-    }
 
-    // Iteração gravitacional entre todos os corpos
-    public override void InteractionForceBodies(List<Body> corpos)
-    {
-        Parallel.ForEach(corpos, corpo =>
-        {
-            Parallel.ForEach(corpos, outroCorpo =>
-            {
-                if (corpo != outroCorpo)
-                {
-                    double r = CalculateEuclidienneDistance(corpo, outroCorpo);
-                    if (r > 0)
-                    {
-                        double F = (G * corpo.getMass() * outroCorpo.getMass()) / Math.Pow(r, 2);
-                        double deltaX = outroCorpo.getPosX() - corpo.getPosX();
-                        double deltaY = outroCorpo.getPosY() - corpo.getPosY();
-                        double Fx = F * (deltaX / r);
-                        double Fy = F * (deltaY / r);
-                        corpo.setFx(corpo.getFx() + Fx);
-                        corpo.setFy(corpo.getFy() + Fy);
-                    }
-                }
-            });
-        });
-    }
+        #endregion
 
-    // Aplica as forças para atualizar posições e velocidades
-    public void AplicaForca()
-    {
-        Parallel.ForEach(corpos, corpo =>
-        {
-            double Ax = corpo.getFx() / corpo.getMass();
-            double Ay = corpo.getFy() / corpo.getMass();
-
-            corpo.setVelX(corpo.getVelX() + Ax * tempo);
-            corpo.setVelY(corpo.getVelY() + Ay * tempo);
-
-            corpo.setPosX(corpo.getPosX() + corpo.getVelX() * tempo + 0.5 * Ax * Math.Pow(tempo, 2));
-            corpo.setPosY(corpo.getPosY() + corpo.getVelY() * tempo + 0.5 * Ay * Math.Pow(tempo, 2));
-
-            corpo.setFx(0); // Limpa a força acumulada após aplicar
-            corpo.setFy(0);
-        });
-    }
-
-    // Verifica colisões entre os corpos
-    public void VerificaColisao()
-    {
-        var colisoes = new ConcurrentBag<(Body, Body)>();
-        Parallel.For(0, corpos.Count, i =>
-        {
-            for (int j = i + 1; j < corpos.Count; j++)
-            {
-                double distancia = CalculateEuclidienneDistance(corpos[i], corpos[j]);
-                if (distancia < corpos[i].getRadius() + corpos[j].getRadius())
-                {
-                    colisoes.Add((corpos[i], corpos[j]));
-                }
-            }
-        });
-
-        List<Body> novosCorpos = new List<Body>();
-        foreach (var (corpoA, corpoB) in colisoes)
-        {
-            Body novoCorpo = corpoA + corpoB; // Cria um novo corpo a partir da colisão
-            novosCorpos.Add(novoCorpo);
-            lock (corpos)
-            {
-                corpos.Remove(corpoA);
-                corpos.Remove(corpoB);
-            }
-        }
-
-        lock (corpos)
-        {
-            corpos.AddRange(novosCorpos);
-        }
-    }
-
-    // Calcula a distância entre dois corpos
-    private double CalculateEuclidienneDistance(Body bodyA, Body bodyB)
-    {
-        return Math.Sqrt(Math.Pow(bodyA.getPosX() - bodyB.getPosX(), 2) + Math.Pow(bodyA.getPosY() - bodyB.getPosY(), 2));
-    }
-
-    // Implementação de métodos abstratos
-    public override void GravitationalForceBodies(Body bodyA, Body bodyB)
-    {
-        double r = CalculateEuclidienneDistance(bodyA, bodyB);
-        if (r > 0)
-        {
-            double F = (G * bodyA.getMass() * bodyB.getMass()) / Math.Pow(r, 2);
-            double deltaX = bodyB.getPosX() - bodyA.getPosX();
-            double deltaY = bodyB.getPosY() - bodyA.getPosY();
-            bodyA.setFx(bodyA.getFx() + F * (deltaX / r));
-            bodyA.setFy(bodyA.getFy() + F * (deltaY / r));
-        }
+        private Panel PainelControles;
+        private Button BotaoParar;
+        private Button BotaoIniciar;
+        private Label LabelNumCorpos;
+        private NumericUpDown InputNumCorpos;
+        private Label LabelTempoIteracoes;
+        private NumericUpDown InputTempoIteracoes;
+        private Label LabelMassas;
+        private NumericUpDown InputMinMassa;
+        private NumericUpDown InputMaxMassa;
+        private NumericUpDown InputMinRaio;
+        private NumericUpDown InputMaxRaio;
+        private Label LabelRaios;
+        private Panel Espaco;
+        private Button BotaoGerar;
+        private Label LabelNumIteracoes;
+        private Button LoadButton;
+        private Button SaveButton;
     }
 }
